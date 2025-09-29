@@ -2,38 +2,137 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Hjalmars Snus Factory (Fixed)</title>
+<title>Hjalmars Snus Factory</title>
 <style>
-body{margin:0;font-family: Arial, sans-serif;display:flex;height:100vh;background: linear-gradient(#f8f4e3,#f0e9d2);overflow:hidden;}
-#leftPanel{flex:2;display:flex;flex-direction:column;align-items:center;justify-content:start;padding:20px;position:relative;}
-#cookieCount{font-size:2.2em;margin-top:20px;text-shadow:1px 1px 2px #aaa;}
-#cpsCount{font-size:1.2em;margin-bottom:20px;}
-#clickImg{width:300px;cursor:pointer;transition:0.1s;border-radius:50%;box-shadow:0 5px 15px rgba(0,0,0,0.3);} 
-#clickImg:active{transform:scale(0.95);}
-#cursorContainer{position:absolute;width:400px;height:400px;top:150px;pointer-events:none;}
-.cursor{position:absolute;width:50px;height:50px;background:url('https://upload.wikimedia.org/wikipedia/commons/7/76/Mouse-pointer.svg') no-repeat center/contain;}
-.floatingNumber{position:absolute;font-size:20px;font-weight:bold;color:#ff4500;pointer-events:none;animation:floating 1s ease-out forwards;}
-@keyframes floating{0%{opacity:1;transform:translateY(0px);}100%{opacity:0;transform:translateY(-50px);}}
-#nameInput{margin-top:20px;}
-#rightPanel{flex:1;background:#eee;padding:20px;overflow-y:auto;border-left:2px solid #ddd;}
-.shopItem,.upgradeItem,.rebirthItem{background:#fff;padding:10px;margin:10px 0;border-radius:8px;box-shadow:0 2px 5px rgba(0,0,0,0.1);cursor:pointer;display:flex;align-items:center;transition:0.2s;}
-.shopItem:hover,.upgradeItem:hover,.rebirthItem:hover{transform:scale(1.02);box-shadow:0 4px 10px rgba(0,0,0,0.2);}
-#upgradesTab{background:#ccc;padding:10px;margin-bottom:10px;cursor:pointer;text-align:center;border-radius:5px;}
-#upgradesPanel{display:none;margin-bottom:20px;}
-#statsPanel{background:#fff;padding:10px;border-radius:8px;box-shadow:0 2px 5px rgba(0,0,0,0.1);margin-top:20px;}
-#adminPanel{background:#ffdddd;padding:10px;margin-top:20px;display:none;border:2px solid red;}
-button{margin:5px 0;padding:5px 10px;border-radius:5px;cursor:pointer;}
-#adminPanel input{width:120px;margin-right:5px;}
-/* Offline popup */
-#offlinePopup{position:fixed;left:50%;transform:translateX(-50%);top:20px;background:rgba(0,0,0,0.85);color:#fff;padding:12px 18px;border-radius:8px;box-shadow:0 4px 12px rgba(0,0,0,0.3);font-weight:bold;display:none;z-index:9999;}
+body {
+    margin:0;
+    font-family: Arial, sans-serif;
+    display:flex;
+    height:100vh;
+    background: linear-gradient(#235027, #474334);
+    overflow:hidden;
+}
+#leftPanel {
+    flex:2;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    position:relative;
+}
+#cookieCount {
+    font-size:2.2em;
+    margin-top:20px;
+    text-shadow:1px 1px 2px #aaa;
+}
+#cpsCount {
+    font-size:1.2em;
+    margin-bottom:20px;
+}
+#clickImg {
+    width:300px;
+    cursor:pointer;
+    transition:0.1s;
+    border-radius:50%;
+    box-shadow:0 5px 15px rgba(0,0,0,0.3);
+}
+#clickImg:active {
+    transform:scale(0.95);
+}
+#cursorContainer {
+    position:absolute;
+    width:400px;
+    height:400px;
+    top:150px;
+    pointer-events:none;
+}
+.floatingNumber {
+    position:absolute;
+    font-size:20px;
+    font-weight:bold;
+    color:#ff4500;
+    pointer-events:none;
+    animation:floating 1s ease-out forwards;
+}
+@keyframes floating {
+    0% { opacity:1; transform:translateY(0px); }
+    100% { opacity:0; transform:translateY(-50px); }
+}
+#nameInput { margin-top:20px; }
+#rightPanel {
+    flex:1;
+    background:#eee;
+    padding:20px;
+    overflow-y:auto;
+    border-left:2px solid #ddd;
+}
+.shopItem, .upgradeItem, .rebirthItem {
+    background:#fff;
+    padding:10px;
+    margin:10px 0;
+    border-radius:8px;
+    box-shadow:0 2px 5px rgba(0,0,0,0.1);
+    cursor:pointer;
+    display:flex;
+    justify-content:space-between;
+    transition:0.2s;
+}
+.shopItem:hover, .upgradeItem:hover, .rebirthItem:hover {
+    transform:scale(1.02);
+    box-shadow:0 4px 10px rgba(0,0,0,0.2);
+}
+#upgradesTab {
+    background:#ccc;
+    padding:10px;
+    margin-bottom:10px;
+    cursor:pointer;
+    text-align:center;
+    border-radius:5px;
+}
+#upgradesPanel { display:none; margin-bottom:20px; }
+#statsPanel {
+    background:#fff;
+    padding:10px;
+    border-radius:8px;
+    box-shadow:0 2px 5px rgba(0,0,0,0.1);
+    margin-top:20px;
+}
+#adminPanel {
+    background:#ffdddd;
+    padding:10px;
+    margin-top:20px;
+    display:none;
+    border:2px solid red;
+}
+button {
+    margin:5px 0;
+    padding:5px 10px;
+    border-radius:5px;
+    cursor:pointer;
+}
+#adminPanel input { width:120px; margin-right:5px; }
+#offlinePopup {
+    position:fixed;
+    left:50%;
+    transform:translateX(-50%);
+    top:20px;
+    background:rgba(0,0,0,0.85);
+    color:#fff;
+    padding:12px 18px;
+    border-radius:8px;
+    box-shadow:0 4px 12px rgba(0,0,0,0.3);
+    font-weight:bold;
+    display:none;
+    z-index:9999;
+}
 </style>
 </head>
 <body>
+
 <div id="leftPanel">
 <h1>Hjalmars Snus Factory</h1>
-<div id="cookieCount">0.000 Cookies</div>
-<div id="cpsCount">0.000 cookies/sec</div>
-<img id="clickImg" src="snus.png" alt="Cookie">
+<div id="cookieCount">0 Snus</div>
+<div id="cpsCount">0 Snus/sec</div>
+<img id="clickImg" src="snus.png" alt="Snus">
 <div id="cursorContainer"></div>
 <div id="nameInput">
 <input type="text" id="playerName" placeholder="Enter your name">
@@ -41,397 +140,368 @@ button{margin:5px 0;padding:5px 10px;border-radius:5px;cursor:pointer;}
 </div>
 </div>
 
-
 <div id="rightPanel">
 <div id="upgradesTab" onclick="toggleUpgrades()">Upgrades ▼</div>
 <div id="upgradesPanel"></div>
 <h2>Shop</h2>
 <div id="shopItems"></div>
-<div class="rebirthItem" onclick="prestige()">Prestige (Convert cookies to points)</div>
+<div class="rebirthItem" onclick="prestige()">Prestige (Convert Snus to points)</div>
 <div id="statsPanel">
 <h3>Stats</h3>
-<p id="totalCookiesStat">Total Cookies: 0.000</p>
+<p id="totalCookiesStat">Total Snus: 0</p>
 <p id="clicksStat">Total Clicks: 0</p>
 <p id="prestigeStat">Prestige Points: 0</p>
 </div>
 <div id="adminPanel">
 <h3>Admin Panel</h3>
 <input type="text" id="adminCookieInput" placeholder="Amount">
-<button onclick="adminAddCustomCookies()">Add Cookies</button>
-<button onclick="adminRemoveCookies()">Remove Cookies</button>
-<button onclick="adminMultiplyCookies()">×10 Cookies</button>
-<button onclick="adminSetCPS()">Set CPS</button>
+<button onclick="adminAddCustomSnus()">Add Snus</button>
+<button onclick="adminRemoveSnus()">Remove Snus</button>
+<button onclick="adminMultiplySnus()">×10 Snus</button>
+<button onclick="adminSetCPS()">Set SPS</button>
 <button onclick="adminGiveAllItems()">Give All Items</button>
 <button onclick="adminMaxUpgrades()">Max Upgrades</button>
 <button onclick="startClickFrenzy()">Click Frenzy ×777</button>
 <button onclick="stopClickFrenzy()">Stop Click Frenzy</button>
-<button onclick="startCookieFrenzy()">Cookie Frenzy ×100</button>
-<button onclick="stopCookieFrenzy()">Stop Cookie Frenzy</button>
+<button onclick="startSnusFrenzy()">Snus Frenzy ×100</button>
+<button onclick="stopSnusFrenzy()">Stop Snus Frenzy</button>
 <button onclick="adminAddPrestige()">Add Prestige</button>
 <button onclick="toggleAutoBuy()">Auto-Buy Items</button>
 <button onclick="toggleAutoUpgrade()">Auto-Buy Upgrades</button>
-<button onclick="toggleFreeze()">Freeze CPS</button>
+<button onclick="toggleFreeze()">Freeze SPS</button>
 <button onclick="resetGame()">Reset Game</button>
 </div>
 </div>
 
 <div id="offlinePopup"></div>
 
-
 <script>
-// --- Format Numbers (3 decimals) ---
+// --- Format Numbers ---
 function formatNumber(n){
- if(n < 1e3) return n.toFixed(3);
- if(n < 1e6) return (n/1e3).toFixed(3)+"K";
- if(n < 1e9) return (n/1e6).toFixed(3)+"M";
- if(n < 1e12) return (n/1e9).toFixed(3)+"B";
- if(n < 1e15) return (n/1e12).toFixed(3)+"T";
- if(n < 1e18) return (n/1e15).toFixed(3)+"Qa";
- if(n < 1e21) return (n/1e18).toFixed(3)+"Qi";
- return n.toExponential(3);
+    if(n < 1e3) return n.toFixed(0);
+    if(n < 1e6) return (n/1e3).toFixed(2)+"K";
+    if(n < 1e9) return (n/1e6).toFixed(2)+"M";
+    if(n < 1e12) return (n/1e9).toFixed(2)+"B";
+    return n.toExponential(2);
 }
 
-
 // --- Game Variables ---
-let score=0,totalCookies=0,baseClickValue=1,clicksMade=0,rebirthMult=1,cpsExtraBase=0,prestigePoints=0,playerName="";
-let cursorOwned=0,clickFrenzyActive=false,cookieFrenzyActive=false,autoBuyItems=false,autoBuyUpgrades=false,freezeCPS=false;
-let clickMultiplier = 1; // frenzies multiply this
-let cpsMultiplier = 1;   // frenzies multiply this
+let score=0, totalSnus=0, baseClickValue=1, clicksMade=0, rebirthMult=1, cpsExtraBase=0, prestigePoints=0, playerName="";
+let clickMultiplier=1, cpsMultiplier=1;
+let clickFrenzyActive=false, snusFrenzyActive=false, autoBuyItems=false, autoBuyUpgrades=false, freezeCPS=false;
 
 // --- Shop Items ---
-const items = [
-  {name:"Velo", baseCps:2.723, cps:2.723, baseCost:100, cost:100, owned:0},
-  {name:"Zyn", baseCps:15.482, cps:15.482, baseCost:1000, cost:1000, owned:0},
-  {name:"Loop", baseCps:37.856, cps:37.856, baseCost:3000, cost:3000, owned:0},
-  {name:"Puck", baseCps:102.459, cps:102.459, baseCost:10000, cost:10000, owned:0},
-  {name:"Siberia", baseCps:423.786, cps:423.786, baseCost:40000, cost:40000, owned:0},
-  {name:"Greatest", baseCps:1087.345, cps:1087.345, baseCost:100000, cost:100000, owned:0},
-  {name:"Odens", baseCps:5123.982, cps:5123.982, baseCost:500000, cost:500000, owned:0},
-  {name:"Iceberg", baseCps:10023.456, cps:10023.456, baseCost:1000000, cost:1000000, owned:0},
-  {name:"Cuba", baseCps:40078.234, cps:40078.234, baseCost:4000000, cost:4000000, owned:0},
-  {name:"Pablo", baseCps:200123.987, cps:200123.987, baseCost:10000000, cost:10000000, owned:0}
+// Added items requested by user (XQS, CUBA, PABLO, EPOK, VELO, killa, greatest, rabbit, glitch)
+// Kept original items as well; all entries include baseCps, cps, baseCost, cost, owned
+const items=[
+  {name:"XQS", baseCps:0.4, cps:0.4, baseCost:15, cost:15, owned:0},
+  {name:"CUBA", baseCps:5, cps:5, baseCost:100, cost:100, owned:0},
+  {name:"PABLO", baseCps:8, cps:8, baseCost:1100, cost:1100, owned:0},
+  {name:"EPOK", baseCps:16, cps:16, baseCost:3000, cost:3000, owned:0},
+  {name:"VELO", baseCps:32, cps:32, baseCost:100, cost:100, owned:0},
+  // original item kept (case-different)
+  {name:"Velo", baseCps:64, cps:64, baseCost:100, cost:100, owned:0},
+  {name:"Zyn", baseCps:128, cps:128, baseCost:1000, cost:1000, owned:0},
+  {name:"Loop", baseCps:256, cps:256, baseCost:3000, cost:3000, owned:0},
+  {name:"Puck", baseCps:578, cps:578, baseCost:10000, cost:10000, owned:0},
+  {name:"killa", baseCps:1283, cps:1283, baseCost:50000, cost:50000, owned:0},
+  {name:"greatest", baseCps:2742, cps:2742, baseCost:200000, cost:200000, owned:0},
+  {name:"rabbit", baseCps:5638, cps:5638, baseCost:750000, cost:750000, owned:0},
+  {name:"glitch", baseCps:10432, cps:10432, baseCost:2500000, cost:2500000, owned:0}
 ];
-
-
-// --- Helper to find item by name ---
-function findItem(name){ return items.find(it => it.name === name); }
 
 // --- Item Upgrades ---
-let itemUpgrades=[
- {item:"Velo",name:"Double power",cost:5000,applied:false,effect:()=>{const it=findItem('Velo'); if(it) it.cps*=2;}},
- {item:"Zyn",name:"Double power",cost:10000,applied:false,effect:()=>{const it=findItem('Zyn'); if(it) it.cps*=2;}},
- {item:"Loop",name:"Loop i Loop",cost:15000,applied:false,effect:()=>{const it=findItem('Loop'); if(it) it.cps*=3;}},
- {item:"Puck",name:"Hockey Puck",cost:50000,applied:false,effect:()=>{const it=findItem('Puck'); if(it) it.cps*=2;}},
- {item:"Siberia",name:"Immigrant",cost:100000,applied:false,effect:()=>{const it=findItem('Siberia'); if(it) it.cps*=2;}},
- {item:"Greatest",name:"The Best",cost:300000,applied:false,effect:()=>{const it=findItem('Greatest'); if(it) it.cps*=2;}},
- {item:"Odens",name:"Godly",cost:600000,applied:false,effect:()=>{const it=findItem('Odens'); if(it) it.cps*=2;}},
- {item:"Iceberg",name:"Icy",cost:1200000,applied:false,effect:()=>{const it=findItem('Iceberg'); if(it) it.cps*=3;}},
- {item:"Cuba",name:"Espana",cost:2400000,applied:false,effect:()=>{const it=findItem('Cuba'); if(it) it.cps*=2;}},
- {item:"Pablo",name:"Devils Snus",cost:4800000,applied:false,effect:()=>{const it=findItem('Pablo'); if(it) it.cps*=2;}}
-];
+// changed to use baseCost and applied count for scaling
+let itemUpgrades=[];
+items.forEach(item=>{
+    for(let i=1;i<=5;i++){
+        itemUpgrades.push({
+            item:item.name,
+            level:i,
+            name:item.name+" Upgrade "+i,
+            baseCost: Math.floor(item.baseCost*10*i),
+            applied:0, // number of times bought
+            // effect multiplies the specific item's cps; will be applied 'applied' times on load
+            effect:()=>{ const it=items.find(it=>it.name===item.name); if(it) it.cps*=1.5; },
+            requiredOwned: i===1 ? 5 : i*10
+        });
+    }
+});
 
+// --- General Upgrades ---
+// changed to be repeatable (applied: number) with baseCost for scaling
 let generalUpgrades=[
- {name:"Double Click Power",cost:1000,applied:false,effect:()=>{baseClickValue*=2;}},
- {name:" +10 Click Power",cost:5000,applied:false,effect:()=>{baseClickValue+=10;}},
- {name:"Cursor Bonus CPS",cost:7000,applied:false,effect:()=>{cpsExtraBase+=5;}}
+  {name:"Double Click Power", baseCost:1000, applied:0, effect:()=>{baseClickValue*=2;}},
+  {name:"+10 Click Power", baseCost:5000, applied:0, effect:()=>{baseClickValue+=10;}},
+  {name:"Cursor Bonus SPS", baseCost:7000, applied:0, effect:()=>{cpsExtraBase+=5;}}
 ];
-
 
 // --- Elements ---
 const counter=document.getElementById("cookieCount");
 const cpsCounter=document.getElementById("cpsCount");
 const clickImgElem=document.getElementById("clickImg");
 const playerNameInput=document.getElementById("playerName");
-const adminPanelElem=document.getElementById("adminPanel");
 const shopItemsDiv=document.getElementById("shopItems");
 const upgradesPanel=document.getElementById("upgradesPanel");
-const cursorContainer=document.getElementById("cursorContainer");
-const offlinePopup=document.getElementById('offlinePopup');
-
+const adminPanelElem=document.getElementById("adminPanel");
+const offlinePopup=document.getElementById("offlinePopup");
 
 // --- Floating Numbers ---
 function createFloatingNumber(x,y,text){
- const div=document.createElement("div");
- div.className="floatingNumber";
- div.style.left=(x-10)+"px";
- div.style.top=(y-10)+"px";
- div.textContent=text;
- document.body.appendChild(div);
- setTimeout(()=>div.remove(),1000);
+    const div=document.createElement("div");
+    div.className="floatingNumber";
+    div.style.left=(x-10)+"px";
+    div.style.top=(y-10)+"px";
+    div.textContent=text;
+    document.body.appendChild(div);
+    setTimeout(()=>div.remove(),1000);
 }
-
 function createFloatingNumberFromElem(elem,text){
- const rect = elem.getBoundingClientRect();
- createFloatingNumber(rect.left + rect.width/2, rect.top, text);
+    const rect=elem.getBoundingClientRect();
+    createFloatingNumber(rect.left+rect.width/2, rect.top, text);
 }
-
 function showOfflinePopup(text){
- offlinePopup.textContent = text;
- offlinePopup.style.display = 'block';
- offlinePopup.style.opacity = '1';
- // show for 5 seconds then hide
- setTimeout(()=>{
-   offlinePopup.style.transition = 'opacity 0.6s ease';
-   offlinePopup.style.opacity = '0';
-   setTimeout(()=> offlinePopup.style.display = 'none', 600);
- },5000);
+    offlinePopup.textContent=text;
+    offlinePopup.style.display='block';
+    offlinePopup.style.opacity='1';
+    setTimeout(()=>{
+        offlinePopup.style.transition='opacity 0.6s ease';
+        offlinePopup.style.opacity='0';
+        setTimeout(()=>offlinePopup.style.display='none',600);
+    },5000);
 }
-
 
 // --- Update UI ---
 function updateUI(){
- counter.textContent=formatNumber(score)+" Cookies";
- let cps = getTotalCPS();
- cpsCounter.textContent=formatNumber(cps)+" cookies/sec";
- renderShop();
- renderCursors();
- updateStats();
+    counter.textContent=formatNumber(score)+" Snus";
+    cpsCounter.textContent=formatNumber(getTotalSPS()*cpsMultiplier)+" Snus/sec";
+    renderShop();
+    renderUpgrades();
+    updateStats();
 }
-
 
 // --- Shop ---
 function renderShop(){
- shopItemsDiv.innerHTML="";
- items.forEach((item,i)=>{
-   const div=document.createElement("div");
-   div.className="shopItem";
-   div.textContent=`${item.name} - CPS: ${formatNumber(item.cps)} - Cost: ${formatNumber(Math.floor(item.cost))} - Owned: ${formatNumber(item.owned)}`;
-   div.onclick=()=>buyItem(i, div);
-   shopItemsDiv.appendChild(div);
- });
+    shopItemsDiv.innerHTML="";
+    items.forEach((item,i)=>{
+        const div=document.createElement("div");
+        div.className="shopItem";
+        div.textContent=`${item.name} - SPS: ${formatNumber(item.cps)} - Cost: ${formatNumber(Math.floor(item.cost))} - Owned: ${item.owned}`;
+        div.onclick=()=>buyItem(i,div);
+        shopItemsDiv.appendChild(div);
+    });
 }
 
-
-function buyItem(i, elem){
- // buy one at a time (prevents giant while loops). Auto-buy loop may call repeatedly.
- if(score>=items[i].cost){
-   score-=items[i].cost;
-   items[i].owned++;
-   items[i].cost=Math.floor(items[i].cost*1.15);
-   createFloatingNumberFromElem(elem, "+Item");
-   updateUI();
- }
+function buyItem(i,elem){
+    if(score>=items[i].cost){
+        score-=items[i].cost;
+        items[i].owned++;
+        items[i].cost=Math.floor(items[i].cost*1.15);
+        createFloatingNumberFromElem(elem,"+Item");
+        updateUI();
+    }
 }
 
-
-// --- Click Cookie ---
+// --- Click ---
 clickImgElem.addEventListener("click",(e)=>{
- const clickValue = baseClickValue * clickMultiplier * rebirthMult;
- score+=clickValue;
- totalCookies+=clickValue;
- clicksMade++;
- createFloatingNumber(e.clientX,e.clientY,"+"+formatNumber(clickValue));
- updateUI();
+    const clickValue=baseClickValue*clickMultiplier*rebirthMult;
+    score+=clickValue;
+    totalSnus+=clickValue;
+    clicksMade++;
+    createFloatingNumber(e.clientX,e.clientY,"+"+formatNumber(clickValue));
+    updateUI();
 });
 
-
-// --- Smooth CPS Loop ---
-const fps = 60;
-setInterval(() => {
-   if(freezeCPS) return;
-   let cps = getTotalCPS();
-   cps *= cpsMultiplier; // apply any frenzy multiplier
-   let increment = cps / fps;
-   score += increment;
-   totalCookies += increment;
-   updateUI();
-}, 1000 / fps);
-
+// --- CPS Loop ---
+setInterval(()=>{
+    if(!freezeCPS){
+        const sps=getTotalSPS()*cpsMultiplier;
+        score+=sps/60;
+        totalSnus+=sps/60;
+        updateUI();
+    }
+},1000/60);
 
 // --- Upgrades ---
-function toggleUpgrades(){
- upgradesPanel.style.display=upgradesPanel.style.display==="none"?"block":"none";
- renderUpgrades();
-}
+function toggleUpgrades(){ upgradesPanel.style.display=upgradesPanel.style.display==="none"?"block":"none"; renderUpgrades(); }
 function renderUpgrades(){
- upgradesPanel.innerHTML="";
- [...generalUpgrades,...itemUpgrades].forEach(up=>{
-   if(!up.applied){
-     const div=document.createElement("div");
-     div.className="upgradeItem";
-     div.textContent=`${up.name} - Cost: ${formatNumber(Math.floor(up.cost))}`;
-     div.onclick=()=>{
-       if(score>=up.cost){
-         score-=up.cost;
-         up.applied=true;
-         up.effect();
-         createFloatingNumberFromElem(div, "+Upgrade");
-         updateUI();
-       }
-     };
-     upgradesPanel.appendChild(div);
-   }
- });
+    upgradesPanel.innerHTML="";
+    // consolidated: both generalUpgrades and itemUpgrades now use baseCost and applied counts
+    [...generalUpgrades,...itemUpgrades].forEach(up=>{
+        const div=document.createElement("div");
+        div.className="upgradeItem";
+        let canBuy=true;
+        if(up.item) {
+            const owned=findItem(up.item)?.owned || 0;
+            canBuy=owned>=up.requiredOwned;
+        }
+        // price scales with how many times bought
+        const price = up.baseCost ? Math.floor(up.baseCost * Math.pow(1.5, up.applied)) : Math.floor(up.cost * Math.pow(1.5, up.applied));
+        // show how many times purchased (if >0)
+        const purchasedText = up.applied && up.applied > 0 ? ` (bought x${up.applied})` : "";
+        div.textContent=`${up.name} - Cost: ${formatNumber(price)}${up.item?' (Requires '+up.requiredOwned+' '+up.item+')':''}${purchasedText}`;
+        div.style.opacity=canBuy?"1":"0.5";
+        div.onclick=()=>{
+            if(score>=price && canBuy){
+                score-=price;
+                // increment applied correctly for both general and item upgrades
+                up.applied = (typeof up.applied === 'number') ? up.applied + 1 : 1;
+                // apply the effect once for this purchase
+                up.effect();
+                createFloatingNumberFromElem(div,"+Upgrade");
+                updateUI();
+            }
+        };
+        upgradesPanel.appendChild(div);
+    });
 }
-
-
-// --- Player Name ---
-function setName(){
- playerName=playerNameInput.value;
- if(playerName.toLowerCase()==="hjalmarprimemode") adminPanelElem.style.display="block";
- else adminPanelElem.style.display="none";
- alert("Welcome, "+playerName+"!");
-}
-
-
-// --- Prestige ---
-function prestige(){
- let points=Math.floor(score/100000);
- if(points>0){
-   prestigePoints+=points;
-   score=0;
-   // reset items to base state
-   items.forEach(it=>{ it.owned=0; it.cps = it.baseCps; it.cost = it.baseCost; });
-   // reset upgrades
-   itemUpgrades.forEach(up=>up.applied=false);
-   generalUpgrades.forEach(up=>up.applied=false);
-   baseClickValue = 1;
-   cpsExtraBase = 0;
-   clickMultiplier = 1;
-   cpsMultiplier = 1;
-   createFloatingNumber(window.innerWidth/2,150,"+Prestige");
-   updateUI();
-   alert(`You gained ${points} prestige points!`);
- }else alert("You need more cookies to gain prestige!");
-}
-
 
 // --- Stats ---
 function updateStats(){
- document.getElementById("totalCookiesStat").textContent="Total Cookies: "+formatNumber(totalCookies);
- document.getElementById("clicksStat").textContent="Total Clicks: "+clicksMade;
- document.getElementById("prestigeStat").textContent="Prestige Points: "+prestigePoints;
+    document.getElementById("totalCookiesStat").textContent="Total Snus: "+formatNumber(totalSnus);
+    document.getElementById("clicksStat").textContent="Total Clicks: "+clicksMade;
+    document.getElementById("prestigeStat").textContent="Prestige Points: "+prestigePoints;
 }
 
+// --- Total SPS ---
+function getTotalSPS(){ return items.reduce((acc,it)=>acc+it.cps*it.owned,0)+cpsExtraBase; }
+function findItem(name){ return items.find(it=>it.name===name); }
+
+// --- Name ---
+function setName(){
+    playerName=playerNameInput.value;
+    adminPanelElem.style.display=(playerName.toLowerCase()==="hjalmarprimemode")?"block":"none";
+    document.title=playerName+" - Hjalmars Snus Factory";
+    alert("Welcome, "+playerName+"!");
+}
+
+// --- Prestige ---
+function prestige(){
+    if(score>=100000){
+        const points=Math.floor(score/100000);
+        prestigePoints+=points;
+        rebirthMult*=1.5;
+        score=0; totalSnus=0;
+        items.forEach(it=>{it.owned=0; it.cps=it.baseCps; it.cost=it.baseCost;});
+        itemUpgrades.forEach(up=>up.applied=0);
+        generalUpgrades.forEach(up=>up.applied=0);
+        baseClickValue=1; cpsExtraBase=0; clickMultiplier=1; cpsMultiplier=1;
+        createFloatingNumber(window.innerWidth/2,150,"+Prestige");
+        updateUI();
+        alert(`You gained ${points} prestige points! Multiplier now x${rebirthMult.toFixed(2)}`);
+    } else alert("You need at least 100,000 Snus to rebirth!");
+}
+
+// --- Auto-buy ---
+setInterval(()=>{
+    if(autoBuyItems) items.forEach((it,i)=>{ if(score>=it.cost) buyItem(i); });
+    if(autoBuyUpgrades) [...generalUpgrades,...itemUpgrades].forEach(up=>{
+        let canBuy=true;
+        if(up.item) canBuy=(findItem(up.item)?.owned||0)>=up.requiredOwned;
+        const price = up.baseCost ? Math.floor(up.baseCost * Math.pow(1.5, up.applied)) : Math.floor(up.cost * Math.pow(1.5, up.applied));
+        // allow repeatable purchases for general upgrades and item upgrades
+        if(score>=price && canBuy){
+            score-=price;
+            up.applied = (typeof up.applied === 'number') ? up.applied + 1 : 1;
+            up.effect();
+            updateUI();
+        }
+    });
+},500);
 
 // --- Admin Functions ---
-function adminAddCustomCookies(){let val=parseFloat(prompt("Enter amount to add:")); if(!isNaN(val)){score+=val; updateUI();}}
-function adminRemoveCookies(){let val=parseFloat(prompt("Enter amount to remove:")); if(!isNaN(val)){score-=val; if(score<0) score=0; updateUI();}}
-function adminMultiplyCookies(){score*=10; updateUI();}
-function adminSetCPS(){let val=parseFloat(prompt("Set CPS to:")); if(!isNaN(val)) cpsExtraBase=val;}
+function adminAddCustomSnus(){let val=parseFloat(prompt("Enter amount:")); if(!isNaN(val)){score+=val; updateUI();}}
+function adminRemoveSnus(){let val=parseFloat(prompt("Remove amount:")); if(!isNaN(val)){score-=val; if(score<0)score=0; updateUI();}}
+function adminMultiplySnus(){score*=10; updateUI();}
+function adminSetCPS(){let val=parseFloat(prompt("Set SPS:")); if(!isNaN(val)) cpsExtraBase=val;}
 function adminGiveAllItems(){items.forEach(it=>it.owned+=10); updateUI();}
-function adminMaxUpgrades(){[...generalUpgrades,...itemUpgrades].forEach(up=>{if(!up.applied){up.applied=true;up.effect();}}); updateUI();}
-function startClickFrenzy(){if(!clickFrenzyActive){clickFrenzyActive=true; clickMultiplier*=777; setTimeout(stopClickFrenzy,30000);}}
-function stopClickFrenzy(){if(clickFrenzyActive){clickFrenzyActive=false; clickMultiplier/=777;}}
-function startCookieFrenzy(){if(!cookieFrenzyActive){cookieFrenzyActive=true; cpsMultiplier*=100; setTimeout(stopCookieFrenzy,30000);}}
-function stopCookieFrenzy(){if(cookieFrenzyActive){cookieFrenzyActive=false; cpsMultiplier/=100;}}
-function adminAddPrestige(){let val=parseInt(prompt("Add prestige points:")); if(!isNaN(val)){prestigePoints+=val; updateStats();}}
+function adminMaxUpgrades(){
+    // grant some number of upgrades; set applied and re-run effects accordingly
+    [...generalUpgrades,...itemUpgrades].forEach(up=>{
+        // if it's a number applied, set to e.g. 5 purchases
+        if(typeof up.applied === 'number'){
+            // to avoid stacking effect multiple times, first reset then apply
+            // We can't reliably undo effects, so we simply apply N times from current state
+            const timesToGive = 5 - up.applied;
+            if(timesToGive > 0){
+                for(let i=0;i<timesToGive;i++){
+                    up.applied++;
+                    up.effect();
+                }
+            }
+        } else {
+            // legacy fallback
+            up.applied = 1;
+            up.effect();
+        }
+    });
+    updateUI();
+}
+function startClickFrenzy(){ if(!clickFrenzyActive){ clickFrenzyActive=true; clickMultiplier*=777; setTimeout(stopClickFrenzy,30000); } }
+function stopClickFrenzy(){ if(clickFrenzyActive){ clickFrenzyActive=false; clickMultiplier/=777; } }
+function startSnusFrenzy(){ if(!snusFrenzyActive){ snusFrenzyActive=true; cpsMultiplier*=100; setTimeout(stopSnusFrenzy,30000); } }
+function stopSnusFrenzy(){ if(snusFrenzyActive){ snusFrenzyActive=false; cpsMultiplier/=100; } }
+function adminAddPrestige(){ let val=parseInt(prompt("Add prestige points:")); if(!isNaN(val)){ prestigePoints+=val; updateStats(); } }
 function toggleAutoBuy(){autoBuyItems=!autoBuyItems;}
 function toggleAutoUpgrade(){autoBuyUpgrades=!autoBuyUpgrades;}
 function toggleFreeze(){freezeCPS=!freezeCPS;}
-function resetGame(){if(confirm("Reset all progress?")) { localStorage.removeItem('snusGameState'); location.reload(); }}
+function resetGame(){ if(confirm("Reset all progress?")){ localStorage.removeItem('snusGameState'); location.reload(); } }
 
-
-// --- Auto-buy loop ---
-setInterval(()=>{
- if(autoBuyItems) items.forEach((it,i)=>{ if(score>=it.cost) buyItem(i); });
- if(autoBuyUpgrades) [...generalUpgrades,...itemUpgrades].forEach(up=>{if(!up.applied && score>=up.cost){score-=up.cost; up.applied=true; up.effect(); updateUI();}});
-},500);
-
-
-// ---------- Offline accumulation (timestamp) ----------
-function getTotalCPS(){
-  // total cps from items + any extra base
-  return items.reduce((acc, it) => acc + it.cps * it.owned, 0) + cpsExtraBase;
-}
-
+// --- Save/Load ---
 function saveGameState(){
-  const state = {
-    score,
-    totalCookies,
-    clicksMade,
-    prestigePoints,
-    items: items.map(it => ({name: it.name, owned: it.owned, cost: it.cost})),
-    itemUpgrades: itemUpgrades.map(u => ({name: u.name, applied: u.applied})),
-    generalUpgrades: generalUpgrades.map(u => ({name: u.name, applied: u.applied})),
-    baseClickValue,
-    cpsExtraBase,
-    lastSaved: Date.now()
-  };
-  try {
-    localStorage.setItem('snusGameState', JSON.stringify(state));
-  } catch (e){
-    console.warn('Failed to save state', e);
-  }
+    const state={
+        score,
+        totalSnus,
+        clicksMade,
+        prestigePoints,
+        items:items.map(it=>({name:it.name,owned:it.owned,cost:it.cost})),
+        itemUpgrades:itemUpgrades.map(u=>({name:u.name,applied:u.applied})),
+        generalUpgrades:generalUpgrades.map(u=>({name:u.name,applied:u.applied})),
+        baseClickValue,
+        cpsExtraBase,
+        lastSaved:Date.now()
+    };
+    localStorage.setItem('snusGameState',JSON.stringify(state));
 }
-
 function loadGameState(){
-  try{
-    const raw = localStorage.getItem('snusGameState');
-    if(!raw) return;
-    const state = JSON.parse(raw);
-
-    // restore base primitive state
-    score = state.score ?? score;
-    totalCookies = state.totalCookies ?? totalCookies;
-    clicksMade = state.clicksMade ?? clicksMade;
-    prestigePoints = state.prestigePoints ?? prestigePoints;
-    baseClickValue = state.baseClickValue ?? baseClickValue;
-    cpsExtraBase = state.cpsExtraBase ?? cpsExtraBase;
-
-    // reset items to base then restore owned & cost
-    items.forEach(it => { it.cps = it.baseCps; it.cost = it.baseCost; });
-    if(state.items && Array.isArray(state.items)){
-      state.items.forEach(savedItem => {
-        const it = items.find(x => x.name === savedItem.name);
-        if(it){ it.owned = savedItem.owned ?? it.owned; it.cost = savedItem.cost ?? it.cost; }
-      });
-    }
-
-    // restore applied flags (but do NOT call effects yet)
-    if(state.itemUpgrades && Array.isArray(state.itemUpgrades)){
-      state.itemUpgrades.forEach(savedUp => {
-        const up = itemUpgrades.find(u => u.name === savedUp.name);
-        if(up) up.applied = !!savedUp.applied;
-      });
-    }
-    if(state.generalUpgrades && Array.isArray(state.generalUpgrades)){
-      state.generalUpgrades.forEach(savedUp => {
-        const up = generalUpgrades.find(u => u.name === savedUp.name);
-        if(up) up.applied = !!savedUp.applied;
-      });
-    }
-
-    // now re-apply all upgrade effects (reset cps to base first to avoid stacking twice)
-    items.forEach(it => it.cps = it.baseCps);
-    [...generalUpgrades,...itemUpgrades].forEach(up => { if(up.applied) up.effect(); });
-
-    // now compute offline gain since lastSaved
+    const raw=localStorage.getItem('snusGameState'); if(!raw) return;
+    const state=JSON.parse(raw);
+    score=state.score??score;
+    totalSnus=state.totalSnus??totalSnus;
+    clicksMade=state.clicksMade??clicksMade;
+    prestigePoints=state.prestigePoints??prestigePoints;
+    baseClickValue=state.baseClickValue??baseClickValue;
+    cpsExtraBase=state.cpsExtraBase??cpsExtraBase;
+    if(state.items) state.items.forEach(saved=>{
+        const it=items.find(x=>x.name===saved.name);
+        if(it){it.owned=saved.owned; it.cost=saved.cost;}
+    });
+    if(state.itemUpgrades) state.itemUpgrades.forEach(saved=>{
+        const up=itemUpgrades.find(x=>x.name===saved.name);
+        if(up) up.applied=saved.applied;
+    });
+    if(state.generalUpgrades) state.generalUpgrades.forEach(saved=>{
+        const up=generalUpgrades.find(x=>x.name===saved.name);
+        if(up) up.applied=saved.applied;
+    });
+    // Reapply effects according to applied counts (apply effect up.applied times)
+    [...generalUpgrades,...itemUpgrades].forEach(up=>{
+        if(up.applied && typeof up.applied === 'number' && up.applied>0){
+            for(let i=0;i<up.applied;i++){
+                try{ up.effect(); } catch(e){ console.error("Error applying upgrade effect:", up.name, e); }
+            }
+        }
+    });
     if(state.lastSaved){
-      const now = Date.now();
-      const elapsedMs = Math.max(0, now - state.lastSaved);
-      const elapsedSec = elapsedMs / 1000;
-      const cps = getTotalCPS() * (cpsMultiplier); // include current multiplier (should be 1 normally)
-      const gain = cps * elapsedSec;
-      if(gain > 0){
-        score += gain;
-        totalCookies += gain;
-        // show offline popup for 5 seconds
-        showOfflinePopup('+' + formatNumber(gain) + ' (offline)');
-      }
+        const gain=getTotalSPS()*(Date.now()-state.lastSaved)/1000*cpsMultiplier;
+        if(gain>0){score+=gain; totalSnus+=gain; showOfflinePopup('+'+formatNumber(gain)+' Snus (offline)');}
     }
-
-  }catch(e){
-    console.warn('Failed to load state', e);
-  }
 }
-
-// Save on unload / visibilitychange
 window.addEventListener('beforeunload', saveGameState);
-document.addEventListener('visibilitychange', () => {
-  if(document.visibilityState === 'hidden'){
-    saveGameState();
-  } else {
-    // when regaining visibility we can also load to be safe
-    loadGameState();
-    updateUI();
-  }
-});
+document.addEventListener('visibilitychange',()=>{ if(document.visibilityState==='hidden') saveGameState(); else { loadGameState(); updateUI(); } });
 
-// load on start
+// --- Load ---
 loadGameState();
-
-// --- Initial Update ---
 updateUI();
 </script>
 </body>
